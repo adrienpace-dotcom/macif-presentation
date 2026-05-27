@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repenser l'expérience agence — MACIF Grand Est</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:       #071E52;
+  --blue-mid:   #0F3380;
+  --blue-light: #E8EDF8;
+  --green:      #C4D600;
+  --green-dark: #8FA800;
+  --green-soft: #F2F6C0;
+  --cream:      #F7F6F1;
+  --slate:      #8494B0;
+  --white:      #FFFFFF;
+  --gold:       #F59E0B;
+  --gold-light: #FEF3C7;
+  --purple:     #7C3AED;
+  --purple-light: #EDE9FE;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #0C1220; color: var(--white); overflow-x: hidden; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 56px;
+  background: rgba(7,30,82,0.94); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(196,214,0,0.18);
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 13px; color: rgba(255,255,255,0.9); }
+.nav-mark  { width: 28px; height: 28px; background: var(--green); border-radius: 50%; box-shadow: inset 0 0 0 6px white, inset 0 0 0 8px var(--green); flex-shrink: 0; }
+.nav-dots  { display: flex; gap: 8px; align-items: center; }
+.nav-dot   { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.22); cursor: pointer; border: none; transition: all 0.2s; }
+.nav-dot.active { background: var(--green); width: 22px; border-radius: 4px; }
+.nav-counter { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 500; letter-spacing: 0.1em; min-width: 44px; text-align: right; }
+
+/* ── SLIDES ── */
+.slide { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 60px 60px; position: relative; overflow: hidden; }
+
+/* ══ COVER ══ */
+.s-cover { background: var(--blue); flex-direction: column; text-align: center; }
+.cover-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(196,214,0,0.12) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(15,51,128,0.6) 0%, transparent 60%),
+              linear-gradient(160deg, #071E52 0%, #0a2766 50%, #061540 100%);
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(196,214,0,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(196,214,0,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.cover-content { position: relative; z-index: 2; max-width: 980px; }
+.cover-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(196,214,0,0.12); border: 1px solid rgba(196,214,0,0.3);
+  border-radius: 50px; padding: 8px 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 36px;
+}
+.cover-eyebrow-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+.cover-title { font-family: 'Playfair Display', serif; font-size: clamp(52px, 7vw, 88px); font-weight: 900; line-height: 0.93; letter-spacing: -0.04em; color: white; margin-bottom: 28px; }
+.cover-title em { font-style: italic; color: var(--green); }
+.cover-sub { font-size: 19px; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.60); max-width: 700px; margin: 0 auto 44px; }
+.region-badge { display: inline-flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 18px 32px; margin-bottom: 40px; }
+.rs { text-align: center; }
+.rs-val   { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--green); letter-spacing: -0.04em; line-height: 1; }
+.rs-label { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; line-height: 1.3; }
+.rs-div   { width: 1px; height: 42px; background: rgba(255,255,255,0.15); }
+.cover-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 36px; }
+.cover-chip  { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 50px; padding: 9px 20px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78); }
+.cover-chip strong { color: var(--green); font-weight: 700; }
+.cover-author { font-size: 12px; color: rgba(255,255,255,0.28); letter-spacing: 0.06em; }
+
+/* ══ SHARED ══ */
+.s-dark  { background: var(--blue); }
+.s-light { background: var(--cream); }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.s-dark  .eyebrow { color: var(--green); }
+.s-light .eyebrow { color: var(--green-dark); }
+
+/* ══ CONSTAT ══ */
+.constat-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; width: 100%; align-items: start; }
+.constat-left h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 50px); font-weight: 900; line-height: 1.0; letter-spacing: -0.035em; color: white; margin-bottom: 20px; }
+.constat-left p  { font-size: 15px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 400px; margin-bottom: 24px; }
+.data-context { background: rgba(196,214,0,0.08); border: 1px solid rgba(196,214,0,0.2); border-radius: 16px; padding: 18px 22px; display: flex; gap: 18px; align-items: center; }
+.dc-stat { text-align: center; }
+.dc-val   { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green); letter-spacing: -0.03em; }
+.dc-label { font-size: 10px; color: rgba(255,255,255,0.42); margin-top: 3px; line-height: 1.3; }
+.dc-div   { width: 1px; height: 32px; background: rgba(196,214,0,0.22); }
+.friction-cards { display: flex; flex-direction: column; gap: 11px; }
+.fc { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 17px 20px 17px 22px; display: flex; align-items: flex-start; gap: 14px; position: relative; overflow: hidden; }
+.fc::before { content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--green); }
+.fc-num { width: 30px; height: 30px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--blue); flex-shrink: 0; }
+.fc-body h4 { font-size: 13px; font-weight: 700; color: white; margin-bottom: 3px; }
+.fc-body p  { font-size: 12px; color: rgba(255,255,255,0.48); line-height: 1.4; }
+.fc-stat { text-align: right; flex-shrink: 0; margin-left: auto; }
+.fc-stat strong { display: block; font-family: 'Playfair Display', serif; font-size: 21px; font-weight: 700; color: var(--green); letter-spacing: -0.03em; }
+.fc-stat span   { font-size: 9px; color: rgba(255,255,255,0.3); line-height: 1.3; }
+
+/* ══ VISION ══ */
+.vision-content { max-width: 1200px; width: 100%; }
+.vision-title { font-family: 'Playfair Display', serif; font-size: clamp(34px, 4vw, 54px); font-weight: 900; line-height: 1.0; letter-spacing: -0.04em; color: white; margin-bottom: 44px; max-width: 780px; }
+.flow { display: grid; grid-template-columns: 1fr 32px 1fr 32px 1fr 32px 1fr; gap: 0; align-items: center; }
+.flow-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 22px 16px; text-align: center; }
+.flow-num   { width: 36px; height: 36px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 16px; color: var(--blue); margin: 0 auto 11px; }
+.flow-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+.flow-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+.flow-desc  { font-size: 11px; color: rgba(255,255,255,0.50); line-height: 1.4; margin-bottom: 9px; }
+.flow-tags  { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.flow-tag   { background: rgba(196,214,0,0.12); border: 1px solid rgba(196,214,0,0.25); border-radius: 50px; padding: 2px 8px; font-size: 9px; color: var(--green); font-weight: 500; }
+.flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 20px; opacity: 0.5; }
+
+/* ══ PROJETS (light) ══ */
+.proj-num    { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 900; color: rgba(7,30,82,0.07); line-height: 1; letter-spacing: -0.06em; margin-bottom: -12px; }
+.proj-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 7px; }
+.proj-title  { font-family: 'Playfair Display', serif; font-size: clamp(24px, 2.8vw, 38px); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; color: var(--blue); margin-bottom: 10px; }
+.proj-sub    { font-size: 13px; font-weight: 300; line-height: 1.65; color: #5A6A88; margin-bottom: 18px; }
+.proj-points { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+.proj-point  { display: flex; align-items: flex-start; gap: 9px; font-size: 12px; color: #3A4A6A; line-height: 1.45; }
+.proj-dot    { width: 6px; height: 6px; background: var(--green-dark); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.proj-impact { background: var(--blue); border-radius: 15px; padding: 16px 18px; display: flex; gap: 13px; align-items: center; margin-bottom: 13px; }
+.proj-impact-val  { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--green); letter-spacing: -0.04em; line-height: 1; flex-shrink: 0; }
+.proj-impact-text { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+.demo-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: var(--blue); border: none; border-radius: 50px; padding: 11px 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; text-decoration: none; transition: all 0.18s; align-self: flex-start; }
+.demo-btn:hover { background: #d4e600; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(196,214,0,0.3); }
+
+/* ══ BORNE — image plein cadre ══ */
+.borne-img-wrap {
+  border-radius: 18px; overflow: hidden;
+  box-shadow: 0 20px 50px rgba(7,30,82,0.18);
+  background: var(--blue);
+  aspect-ratio: 16/9;
+}
+.borne-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ══ ANIMATION COMMERCIALE ══ */
+.anim-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; max-width: 1200px; width: 100%; align-items: start; }
+
+/* Gamification cards */
+.gami-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
+.gami-card { border-radius: 16px; padding: 16px; border: 1px solid; }
+.gami-card.gold   { background: var(--gold-light);   border-color: #FDE68A; }
+.gami-card.purple { background: var(--purple-light);  border-color: #C4B5FD; }
+.gami-card.green  { background: var(--green-soft);    border-color: #D9F99D; }
+.gami-card.blue   { background: var(--blue-light);    border-color: #BFDBFE; }
+
+.gami-icon  { font-size: 26px; margin-bottom: 8px; }
+.gami-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+.gami-card.gold   .gami-title { color: #92400E; }
+.gami-card.purple .gami-title { color: #5B21B6; }
+.gami-card.green  .gami-title { color: var(--green-dark); }
+.gami-card.blue   .gami-title { color: var(--blue); }
+.gami-text  { font-size: 11px; line-height: 1.4; }
+.gami-card.gold   .gami-text { color: #B45309; }
+.gami-card.purple .gami-text { color: #6D28D9; }
+.gami-card.green  .gami-text { color: #4D7C0F; }
+.gami-card.blue   .gami-text { color: var(--slate); }
+
+/* Leaderboard mini */
+.leaderboard { background: var(--blue); border-radius: 16px; padding: 18px 20px; margin-bottom: 13px; }
+.lb-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+.lb-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; margin-bottom: 6px; }
+.lb-row:last-child { margin-bottom: 0; }
+.lb-row.first  { background: rgba(245,158,11,0.18); border: 1px solid rgba(245,158,11,0.3); }
+.lb-row.second { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
+.lb-row.third  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+.lb-medal { font-size: 18px; flex-shrink: 0; width: 24px; text-align: center; }
+.lb-name  { font-size: 13px; font-weight: 700; color: white; flex: 1; }
+.lb-score { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--green); letter-spacing: -0.03em; }
+.lb-badge { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 50px; background: rgba(196,214,0,0.15); color: var(--green); }
+
+/* Progress bar challenge */
+.challenge-bar { background: var(--blue-light); border-radius: 14px; padding: 16px; margin-bottom: 13px; }
+.cb-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.cb-title  { font-size: 13px; font-weight: 700; color: var(--blue); }
+.cb-target { font-size: 11px; color: var(--slate); }
+.cb-track  { height: 10px; background: rgba(7,30,82,0.12); border-radius: 5px; overflow: hidden; }
+.cb-fill   { height: 100%; background: linear-gradient(90deg, var(--green-dark), var(--green)); border-radius: 5px; transition: width 1s ease; }
+.cb-labels { display: flex; justify-content: space-between; margin-top: 6px; font-size: 10px; color: var(--slate); }
+
+/* ══ IMPACT ══ */
+.chiffres-content { max-width: 1100px; width: 100%; }
+.chiffres-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 4vw, 50px); font-weight: 900; line-height: 1.0; letter-spacing: -0.04em; color: white; margin-bottom: 40px; max-width: 720px; }
+.kpis-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+.kpi { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px 16px; text-align: center; }
+.kpi.hl { background: var(--green); border-color: var(--green); }
+.kpi.hl .kpi-val   { color: var(--blue); }
+.kpi.hl .kpi-label { color: rgba(7,30,82,0.65); }
+.kpi-val   { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--green); letter-spacing: -0.05em; line-height: 1; margin-bottom: 8px; }
+.kpi-label { font-size: 11px; color: rgba(255,255,255,0.44); line-height: 1.4; }
+.impact-note { font-size: 10px; color: rgba(255,255,255,0.24); text-align: center; margin-bottom: 28px; font-style: italic; }
+.detail-table { display: grid; grid-template-columns: 2fr repeat(3, 1fr); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; overflow: hidden; }
+.dt-header { background: rgba(255,255,255,0.08); padding: 11px 16px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.dt-label  { background: rgba(255,255,255,0.04); padding: 12px 16px; font-size: 13px; font-weight: 600; color: white; border-top: 1px solid rgba(255,255,255,0.07); }
+.dt-cell   { background: transparent; padding: 12px 16px; font-size: 12px; color: rgba(255,255,255,0.58); border-top: 1px solid rgba(255,255,255,0.07); text-align: center; }
+.dt-cell.g { color: var(--green); font-weight: 700; font-family: 'Playfair Display', serif; font-size: 15px; }
+
+/* ── PRINT ── */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .nav { display: none !important; }
+  .slide { min-height: auto; page-break-after: always; padding: 34px 38px; }
+  .demo-btn { display: none; }
+  .s-dark  { background: #071E52 !important; }
+  .s-light { background: #F7F6F1 !important; }
+}
+
+.slide > * { animation: fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand"><div class="nav-mark"></div><span>Repenser l'expérience agence · Grand Est</span></div>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-counter" id="navCounter">1 / 6</div>
+</nav>
+
+<!-- ══════════════════════════════════
+     S1 · COVER
+══════════════════════════════════ -->
+<section class="slide s-cover" id="slide-1">
+  <div class="cover-bg"></div><div class="cover-grid"></div>
+  <div class="cover-content">
+    <div class="cover-eyebrow"><div class="cover-eyebrow-dot"></div>Initiative terrain · Région Grand Est · 2025</div>
+    <h1 class="cover-title">Repenser<br><em>l'expérience</em><br>agence.</h1>
+    <p class="cover-sub">Quatre prototypes fonctionnels pour transformer les frictions du quotidien en leviers commerciaux mesurables — de l'arrivée du client jusqu'à l'engagement de l'équipe.</p>
+    <div class="region-badge">
+      <div class="rs"><div class="rs-val">60</div><div class="rs-label">conseillers<br>Grand Est</div></div>
+      <div class="rs-div"></div>
+      <div class="rs"><div class="rs-val">590</div><div class="rs-label">contrats/an<br>par conseiller</div></div>
+      <div class="rs-div"></div>
+      <div class="rs"><div class="rs-val">35 400</div><div class="rs-label">contrats/an<br>objectif région</div></div>
+      <div class="rs-div"></div>
+      <div class="rs"><div class="rs-val">+21%</div><div class="rs-label">potentiel estimé<br>sur l'objectif</div></div>
+    </div>
+    <div class="cover-chips">
+      <div class="cover-chip"><strong>01</strong> &nbsp;Borne d'accueil intelligente</div>
+      <div class="cover-chip"><strong>02</strong> &nbsp;Écran déporté de recommandation</div>
+      <div class="cover-chip"><strong>03</strong> &nbsp;Outil d'analyse bilan</div>
+      <div class="cover-chip"><strong>04</strong> &nbsp;Animation commerciale gamifiée</div>
+    </div>
+    <div class="cover-author">Adrien · Conseiller commercial · MACIF Région Grand Est</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S2 · CONSTAT
+══════════════════════════════════ -->
+<section class="slide s-dark" id="slide-2">
+  <div class="constat-layout">
+    <div class="constat-left">
+      <div class="eyebrow" style="margin-bottom:16px;">Le constat</div>
+      <h2>Quatre frictions quotidiennes. Un potentiel dormant.</h2>
+      <p>En agence, le temps client n'est pas entièrement au service du conseil, et la dynamique d'équipe repose sur des outils qui n'engagent plus. Quatre opportunités concrètes et directement chiffrables.</p>
+      <div class="data-context">
+        <div class="dc-stat"><div class="dc-val">105 600</div><div class="dc-label">entretiens client<br>par an région</div></div>
+        <div class="dc-div"></div>
+        <div class="dc-stat"><div class="dc-val">8 min</div><div class="dc-label">saisie moy.<br>par entretien</div></div>
+        <div class="dc-div"></div>
+        <div class="dc-stat"><div class="dc-val">60</div><div class="dc-label">conseillers sans<br>pilotage gamifié</div></div>
+      </div>
+    </div>
+    <div class="friction-cards">
+      <div class="fc">
+        <div class="fc-num">1</div>
+        <div class="fc-body"><h4>Accueil non qualifié</h4><p>Besoin découvert au dernier moment. ~30% des visites ne nécessitent pas un conseiller.</p></div>
+        <div class="fc-stat"><strong>~32 000</strong><span>visites/an<br>absorbables</span></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">2</div>
+        <div class="fc-body"><h4>Écran déporté inexploité</h4><p>14 080h d'exposition client pendant la saisie : support de recommandation passive non utilisé.</p></div>
+        <div class="fc-stat"><strong>14 080h</strong><span>exposition<br>perdues/an</span></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">3</div>
+        <div class="fc-body"><h4>Bilan sans outil structuré</h4><p>Détection des manques reposant sur la mémoire du conseiller, sans chiffrage automatique.</p></div>
+        <div class="fc-stat"><strong>5 280</strong><span>bilans/an sans<br>détection systématique</span></div>
+      </div>
+      <div class="fc">
+        <div class="fc-num">4</div>
+        <div class="fc-body"><h4>Animation commerciale peu engageante</h4><p>Challenges et objectifs communiqués sans outil dédié. Pas de gamification, pas de dynamique collective visible.</p></div>
+        <div class="fc-stat"><strong>60</strong><span>conseillers sans<br>leaderboard partagé</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S3 · VISION
+══════════════════════════════════ -->
+<section class="slide s-dark" id="slide-3">
+  <div class="vision-content">
+    <div class="eyebrow" style="margin-bottom:16px;">La vision</div>
+    <h2 class="vision-title">Un écosystème complet — du client à l'équipe.</h2>
+    <div class="flow">
+      <div class="flow-item">
+        <div class="flow-num">1</div>
+        <div class="flow-label">Arrivée</div>
+        <div class="flow-title">Borne d'accueil</div>
+        <div class="flow-desc">Qualifie, oriente, absorbe les flux simples avant que le conseiller soit mobilisé.</div>
+        <div class="flow-tags"><span class="flow-tag">Qualifier</span><span class="flow-tag">Orienter</span><span class="flow-tag">Libérer</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">
+        <div class="flow-num">2</div>
+        <div class="flow-label">Pendant la saisie</div>
+        <div class="flow-title">Écran déporté</div>
+        <div class="flow-desc">Mises en situation émotionnelles ciblées sur les manques produits. Zéro friction.</div>
+        <div class="flow-tags"><span class="flow-tag">Nudger</span><span class="flow-tag">Projeter</span><span class="flow-tag">Ouvrir</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">
+        <div class="flow-num">3</div>
+        <div class="flow-label">Dans l'entretien</div>
+        <div class="flow-title">Outil bilan</div>
+        <div class="flow-desc">Calcule les carences, génère les recommandations produits avec chiffrage automatique.</div>
+        <div class="flow-tags"><span class="flow-tag">Analyser</span><span class="flow-tag">Calculer</span><span class="flow-tag">Recommander</span></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">
+        <div class="flow-num">4</div>
+        <div class="flow-label">Pilotage équipe</div>
+        <div class="flow-title">Animation gamifiée</div>
+        <div class="flow-desc">Challenges, leaderboard, badges et objectifs collectifs pour engager les 60 conseillers.</div>
+        <div class="flow-tags"><span class="flow-tag">Gamifier</span><span class="flow-tag">Engager</span><span class="flow-tag">Fédérer</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S4 · BORNE + ÉCRAN
+══════════════════════════════════ -->
+<section class="slide s-light" id="slide-4">
+  <div style="max-width:1220px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+
+    <!-- BORNE -->
+    <div>
+      <div class="proj-num">01</div>
+      <div class="proj-eyebrow">Borne d'accueil</div>
+      <h2 class="proj-title">Qualifier et orienter avant l'entretien.</h2>
+      <p class="proj-sub">Borne interactive autonome qui absorbe les flux simples et libère les conseillers pour les demandes à valeur ajoutée.</p>
+      <div class="proj-points" style="margin-bottom:16px;">
+        <div class="proj-point"><div class="proj-dot"></div><span>Orientation par motif avec durée estimée automatique</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>File intelligente : RDV prioritaires, urgences isolées</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Autonomie documentaire : attestations, échéanciers, reçus</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Paiement CB des cotisations en période d'échéance</span></div>
+      </div>
+      <div class="proj-impact">
+        <div class="proj-impact-val">~1h</div>
+        <div class="proj-impact-text">libérée par conseiller et par jour · <strong style="color:var(--green)">4 224h/an</strong> sur la région réorientées vers du conseil.</div>
+      </div>
+      <!-- Image borne -->
+      <div class="borne-img-wrap">
+        <img src="borne-macif-visuel.png" alt="Borne d'accueil MACIF — maquette" />
+      </div>
+    </div>
+
+    <!-- ÉCRAN -->
+    <div>
+      <div class="proj-num">02</div>
+      <div class="proj-eyebrow">Écran déporté</div>
+      <h2 class="proj-title">Transformer la saisie en levier de recommandation.</h2>
+      <p class="proj-sub">Pendant les 8 min de saisie, l'écran visible par le client diffuse des mises en situation émotionnelles ciblées sur ses manques produits. Zéro action supplémentaire pour le conseiller.</p>
+      <div class="proj-points" style="margin-bottom:16px;">
+        <div class="proj-point"><div class="proj-dot"></div><span>Panneau conseiller : cocher les manques en 3 secondes</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Défilement automatique 14s — 6 sujets ciblés</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Jamais commercial, toujours émotionnel — nudge passif</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Design premium cinématographique plein écran</span></div>
+      </div>
+      <div class="proj-impact" style="margin-bottom:16px;">
+        <div class="proj-impact-val">792</div>
+        <div class="proj-impact-text">contrats supplémentaires estimés/an — 25% de clients réagissant, 30% de transformation.</div>
+      </div>
+      <a href="https://ecrandeporte.netlify.app" target="_blank" class="demo-btn">▶ &nbsp;Lancer la démo écran</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S5 · BILAN + ANIMATION GAMIFIÉE
+══════════════════════════════════ -->
+<section class="slide s-light" id="slide-5">
+  <div style="max-width:1220px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;">
+
+    <!-- BILAN -->
+    <div>
+      <div class="proj-num">03</div>
+      <div class="proj-eyebrow">Outil bilan</div>
+      <h2 class="proj-title">Détecter, calculer et recommander en temps réel.</h2>
+      <p class="proj-sub">Diagnostic financier complet utilisé pendant l'entretien bilan. Carences calculées automatiquement, recommandations produits générées avec chiffrage immédiat.</p>
+      <div class="proj-points" style="margin-bottom:16px;">
+        <div class="proj-point"><div class="proj-dot"></div><span>Score global /100 — autonomie, protection, épargne, retraite</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Calcul automatique : besoin protection, projection épargne, gap retraite</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Recommandations produits générées automatiquement par carence</span></div>
+        <div class="proj-point"><div class="proj-dot"></div><span>Export PDF imprimable remis au client en fin d'entretien</span></div>
+      </div>
+      <div class="proj-impact" style="margin-bottom:14px;">
+        <div class="proj-impact-val">1 056</div>
+        <div class="proj-impact-text">contrats supplémentaires estimés/an sur 5 280 bilans région · 20% de détection d'une carence non couverte.</div>
+      </div>
+      <a href="https://macif-bilan.netlify.app" target="_blank" class="demo-btn">▶ &nbsp;Ouvrir l'outil bilan</a>
+    </div>
+
+    <!-- ANIMATION GAMIFIÉE -->
+    <div>
+      <div class="proj-num">04</div>
+      <div class="proj-eyebrow">Animation commerciale gamifiée</div>
+      <h2 class="proj-title">Rendre la performance collective visible et engageante.</h2>
+      <p class="proj-sub">Transformer les objectifs et challenges commerciaux en expérience ludique pour les 60 conseillers — leaderboard en temps réel, badges, progression et esprit de compétition sain.</p>
+
+      <!-- Leaderboard mini -->
+      <div class="leaderboard">
+        <div class="lb-title">🏆 Classement du mois — Grand Est</div>
+        <div class="lb-row first">
+          <div class="lb-medal">🥇</div>
+          <div class="lb-name">Sophie M.</div>
+          <div class="lb-score">47</div>
+          <div class="lb-badge">contrats</div>
+        </div>
+        <div class="lb-row second">
+          <div class="lb-medal">🥈</div>
+          <div class="lb-name">Thomas R.</div>
+          <div class="lb-score">43</div>
+          <div class="lb-badge">contrats</div>
+        </div>
+        <div class="lb-row third">
+          <div class="lb-medal">🥉</div>
+          <div class="lb-name">Adrien V.</div>
+          <div class="lb-score">41</div>
+          <div class="lb-badge">contrats</div>
+        </div>
+      </div>
+
+      <!-- Challenge progress -->
+      <div class="challenge-bar">
+        <div class="cb-top">
+          <div class="cb-title">🎯 Challenge Prévoyance — Mai 2025</div>
+          <div class="cb-target">68 / 100 contrats</div>
+        </div>
+        <div class="cb-track"><div class="cb-fill" style="width:68%"></div></div>
+        <div class="cb-labels"><span>Départ</span><span>Objectif collectif : 100</span></div>
+      </div>
+
+      <!-- Mécaniques -->
+      <div class="gami-grid">
+        <div class="gami-card gold"><div class="gami-icon">🏅</div><div class="gami-title">Badges & Titres</div><div class="gami-text">Récompenses visuelles par pallier atteint</div></div>
+        <div class="gami-card purple"><div class="gami-icon">⚡</div><div class="gami-title">Streaks</div><div class="gami-text">Séries de jours consécutifs avec contrats signés</div></div>
+        <div class="gami-card green"><div class="gami-icon">📊</div><div class="gami-title">Progression live</div><div class="gami-text">Objectifs individuels et collectifs en temps réel</div></div>
+        <div class="gami-card blue"><div class="gami-icon">🤝</div><div class="gami-title">Défis d'équipe</div><div class="gami-text">Challenges collectifs agence vs agence</div></div>
+      </div>
+
+      <a href="https://animationmacif.netlify.app" target="_blank" class="demo-btn">▶ &nbsp;Ouvrir l'animation commerciale</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     S6 · IMPACT CHIFFRÉ
+══════════════════════════════════ -->
+<section class="slide s-dark" id="slide-6">
+  <div class="chiffres-content">
+    <div class="eyebrow" style="margin-bottom:16px;">Impact chiffré · Région Grand Est · 60 conseillers · 590 contrats/an</div>
+    <h2 class="chiffres-title">Ce que les quatre outils peuvent changer concrètement.</h2>
+
+    <div class="kpis-main">
+      <div class="kpi">
+        <div class="kpi-val">4 224h</div>
+        <div class="kpi-label">temps conseiller libéré<br>par an sur la région</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val">+7 480</div>
+        <div class="kpi-label">contrats supplémentaires<br>estimés par an</div>
+      </div>
+      <div class="kpi hl">
+        <div class="kpi-val">+21%</div>
+        <div class="kpi-label">de l'objectif régional<br>35 400 contrats</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-val">+125</div>
+        <div class="kpi-label">contrats par conseiller<br>et par an estimés</div>
+      </div>
+    </div>
+
+    <div class="impact-note">* Projections construites sur la base de 60 conseillers, 8 entretiens/jour, 220 jours ouvrés. Hypothèses conservatrices — à valider sur agences pilotes.</div>
+
+    <div class="detail-table">
+      <div class="dt-header">Outil</div>
+      <div class="dt-header" style="text-align:center;">Mécanisme</div>
+      <div class="dt-header" style="text-align:center;">Taux retenu</div>
+      <div class="dt-header" style="text-align:center;">Contrats estimés/an</div>
+
+      <div class="dt-label">01 · Borne d'accueil</div>
+      <div class="dt-cell">Temps libéré réorienté vers entretiens commerciaux</div>
+      <div class="dt-cell">30% visites simples · 45 min/entretien</div>
+      <div class="dt-cell g">+5 632</div>
+
+      <div class="dt-label">02 · Écran déporté</div>
+      <div class="dt-cell">Ouvertures commerciales générées pendant la saisie</div>
+      <div class="dt-cell">25% réaction · 10% ouverture · 30% transfo</div>
+      <div class="dt-cell g">+792</div>
+
+      <div class="dt-label">03 · Outil bilan</div>
+      <div class="dt-cell">Détection systématique des manques produits</div>
+      <div class="dt-cell">2 bilans/sem/conseiller · 20% détection</div>
+      <div class="dt-cell g">+1 056</div>
+
+      <div class="dt-label">04 · Animation gamifiée</div>
+      <div class="dt-cell">Engagement collectif, compétition saine, motivation durable</div>
+      <div class="dt-cell">Levier multiplicateur sur les 3 outils</div>
+      <div class="dt-cell g">Levier ×</div>
+    </div>
+  </div>
+</section>
+
+<script>
+const SLIDES = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+const navCounter = document.getElementById('navCounter');
+
+SLIDES.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => SLIDES[i].scrollIntoView({ behavior: 'smooth' });
+  navDots.appendChild(d);
+});
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = Array.from(SLIDES).indexOf(e.target);
+      document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      navCounter.textContent = `${idx + 1} / ${SLIDES.length}`;
+    }
+  });
+}, { threshold: 0.5 });
+
+SLIDES.forEach(s => obs.observe(s));
+
+document.addEventListener('keydown', e => {
+  const cur = Array.from(SLIDES).findIndex(s => {
+    const r = s.getBoundingClientRect();
+    return r.top >= -80 && r.top < window.innerHeight / 2;
+  });
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') SLIDES[Math.min(cur + 1, SLIDES.length - 1)]?.scrollIntoView({ behavior: 'smooth' });
+  if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  SLIDES[Math.max(cur - 1, 0)]?.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
